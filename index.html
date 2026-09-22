@@ -1,275 +1,992 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Para ti 🌻</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- FUENTES -->
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Poppins:wght@300;400;500&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <style>
+
+        /* =========================
+           GENERAL
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+
+            overflow: hidden;
+
+            font-family:
+                "Poppins",
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    #fffde9,
+                    #fff3b5,
+                    #f5d45b
+                );
+
+            color: #70551e;
+        }
+
+
+        /* =========================
+           PANTALLA INICIAL
+        ========================= */
+
+        #inicio {
+
+            position: fixed;
+
+            inset: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            transition:
+                opacity .8s ease;
+        }
+
+        #inicio.oculto {
+
+            opacity: 0;
+
+            pointer-events: none;
+        }
+
+
+        .tarjeta {
+
+            width: min(
+                430px,
+                90vw
+            );
+
+            padding:
+                45px 30px;
+
+            text-align: center;
+
+            background:
+                rgba(
+                    255,
+                    253,
+                    239,
+                    .9
+                );
+
+            border-radius: 25px;
+
+            box-shadow:
+                0 20px 50px
+                rgba(
+                    120,
+                    90,
+                    20,
+                    .18
+                );
+
+            animation:
+                aparecer 1s ease;
+        }
+
+
+        .corazon {
+
+            font-size: 40px;
+
+            color: #d9a919;
+
+            margin-bottom: 15px;
+
+            animation:
+                latido 2s infinite;
+        }
+
+
+        .tarjeta h1 {
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            font-size: 45px;
+
+            font-weight: 500;
+
+            margin-bottom: 12px;
+        }
+
+
+        .tarjeta p {
+
+            font-size: 14px;
+
+            line-height: 1.7;
+
+            color: #806b42;
+
+            margin-bottom: 25px;
+        }
+
+
+        .boton {
+
+            border: none;
+
+            padding:
+                13px 28px;
+
+            border-radius: 30px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e9bb28,
+                    #dca914
+                );
+
+            color: white;
+
+            font-family:
+                "Poppins",
+                sans-serif;
+
+            cursor: pointer;
+
+            transition:
+                transform .3s ease,
+                box-shadow .3s ease;
+
+            box-shadow:
+                0 8px 20px
+                rgba(
+                    172,
+                    125,
+                    15,
+                    .25
+                );
+        }
+
+
+        .boton:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 12px 25px
+                rgba(
+                    172,
+                    125,
+                    15,
+                    .35
+                );
+        }
+
+
+        /* =========================
+           RAMO
+        ========================= */
+
+        #ramoPantalla {
+
+            position: fixed;
+
+            inset: 0;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: center;
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transition:
+                opacity 1.2s ease;
+        }
+
+
+        #ramoPantalla.mostrar {
+
+            opacity: 1;
+
+            visibility: visible;
+        }
+
+
+        .ramo {
+
+            width: 430px;
+
+            height: 510px;
+
+            max-width: 90vw;
+
+            max-height: 65vh;
+
+            animation:
+                balanceo 6s
+                ease-in-out
+                infinite;
+        }
+
+
+        .ramo svg {
+
+            width: 100%;
+
+            height: 100%;
+
+            overflow: visible;
+        }
+
+
+        /* =========================
+           TALLOS
+        ========================= */
+
+        .tallos path {
+
+            fill: none;
+
+            stroke: #648c32;
+
+            stroke-width: 8;
+
+            stroke-linecap: round;
+        }
+
+
+        /* =========================
+           HOJAS
+        ========================= */
+
+        .hojas ellipse {
+
+            fill: #709b38;
+        }
+
+
+        /* =========================
+           FLORES
+        ========================= */
+
+        .petalo {
+
+            fill: #f5c928;
+
+            stroke: #dca915;
+
+            stroke-width: 2;
+        }
+
+
+        .centro {
+
+            fill: #8b5a19;
+
+            stroke: #734814;
+
+            stroke-width: 2;
+        }
+
+
+        .flor {
+
+            transform-box:
+                fill-box;
+
+            transform-origin:
+                center;
+
+            animation:
+                florEntrada 1s ease forwards;
+        }
+
+
+        .flor1 {
+            animation-delay: .1s;
+        }
+
+        .flor2 {
+            animation-delay: .2s;
+        }
+
+        .flor3 {
+            animation-delay: .3s;
+        }
+
+        .flor4 {
+            animation-delay: .4s;
+        }
+
+        .flor5 {
+            animation-delay: .5s;
+        }
+
+        .flor6 {
+            animation-delay: .6s;
+        }
+
+
+        @keyframes florEntrada {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    scale(.6)
+                    translateY(30px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    scale(1)
+                    translateY(0);
+            }
+        }
+
+
+        /* =========================
+           PAPEL
+        ========================= */
+
+        .papel {
+
+            position: absolute;
+
+            left: 50%;
+
+            bottom: 5px;
+
+            width: 190px;
+
+            height: 115px;
+
+            transform:
+                translateX(-50%);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #fff9d9,
+                    #eee2ad
+                );
+
+            clip-path:
+                polygon(
+                    8% 0,
+                    92% 0,
+                    100% 100%,
+                    0 100%
+                );
+        }
+
+
+        .papel-lazo {
+
+            position: absolute;
+
+            left: 50%;
+
+            top: 15px;
+
+            width: 80px;
+
+            height: 22px;
+
+            transform:
+                translateX(-50%);
+
+            border-radius: 50%;
+
+            background:
+                #e0b526;
+        }
+
+
+        /* =========================
+           MENSAJE
+        ========================= */
+
+        .mensaje {
+
+            margin-top: -20px;
+
+            width: min(
+                800px,
+                90vw
+            );
+
+            text-align: center;
+
+            font-family:
+                "Cormorant Garamond",
+                serif;
+
+            font-size:
+                clamp(
+                    23px,
+                    3vw,
+                    32px
+                );
+
+            opacity: 0;
+
+            transform:
+                translateY(15px);
+
+            transition:
+                opacity 1s ease,
+                transform 1s ease;
+        }
+
+
+        #ramoPantalla.mostrar
+        .mensaje {
+
+            opacity: 1;
+
+            transform:
+                translateY(0);
+
+            transition-delay:
+                1.2s;
+        }
+
+
+        /* =========================
+           ANIMACIONES
+        ========================= */
+
+        @keyframes aparecer {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(25px)
+                    scale(.95);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+        }
+
+
+        @keyframes latido {
+
+            0%,
+            100% {
+
+                transform:
+                    scale(1);
+            }
+
+            50% {
+
+                transform:
+                    scale(1.12);
+            }
+        }
+
+
+        @keyframes balanceo {
+
+            0%,
+            100% {
+
+                transform:
+                    rotate(-1deg);
+            }
+
+            50% {
+
+                transform:
+                    rotate(1.5deg);
+            }
+        }
+
+
+        /* =========================
+           MÓVIL
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .tarjeta h1 {
+
+                font-size: 36px;
+            }
+
+            .ramo {
+
+                width: 340px;
+
+                height: 410px;
+
+                max-height: 58vh;
+            }
+
+            .mensaje {
+
+                font-size: 22px;
+
+                margin-top: 0;
+            }
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-    <!-- FONDO -->
-    <div class="fondo-luces">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
 
+    <!-- =========================
+         INICIO
+    ========================= -->
 
-    <!-- SOBRE -->
-    <main class="inicio" id="inicio">
+    <section id="inicio">
 
-        <div class="sobre" id="sobre">
+        <div class="tarjeta">
 
-            <div class="sobre-cuerpo">
-
-                <div class="corazon">
-                    ♥
-                </div>
-
-                <div class="texto-sobre">
-                    ÁBREME
-                </div>
-
+            <div class="corazon">
+                ♥
             </div>
 
-            <div class="solapa"></div>
+            <h1>
+                Tengo algo para ti...
+            </h1>
 
-            <div class="carta">
+            <p>
+                Hay cosas que son difíciles
+                de decir, así que decidí
+                mostrártelas de una manera
+                diferente.
+            </p>
 
-                <div class="carta-contenido">
-                    <span>Para ti...</span>
-                    <span>con mucho cariño.</span>
-                </div>
-
-            </div>
+            <button
+                class="boton"
+                onclick="mostrarRamo()"
+            >
+                Ver lo que preparé
+            </button>
 
         </div>
 
-    </main>
+    </section>
 
 
-    <!-- CONTENIDO -->
-    <section class="contenido" id="contenido">
 
-        <!-- DESTELLOS -->
-        <div class="destello d1">✦</div>
-        <div class="destello d2">✧</div>
-        <div class="destello d3">✦</div>
-        <div class="destello d4">✧</div>
-        <div class="destello d5">✦</div>
-        <div class="destello d6">✧</div>
+    <!-- =========================
+         RAMO
+    ========================= -->
+
+    <section id="ramoPantalla">
 
 
-        <!-- PÉTALOS -->
-        <div class="petalos-caidos" id="petalosCaidos"></div>
+        <div class="ramo">
+
+            <svg
+                viewBox="0 0 500 600"
+                xmlns="http://www.w3.org/2000/svg"
+            >
 
 
-        <!-- CONTENEDOR DEL MOVIMIENTO DEL MOUSE -->
-        <div class="ramo-interaccion" id="ramoInteraccion">
+                <!-- TALLOS -->
 
-            <!-- RAMO -->
-            <div class="ramo" id="ramo">
+                <g class="tallos">
 
-                <svg
-                    class="ramo-svg"
-                    viewBox="0 0 500 600"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
+                    <path
+                        d="M250 510 C245 400 230 300 205 185"
+                    />
 
-                    <!-- TALLOS -->
-                    <g class="tallos">
+                    <path
+                        d="M250 510 C260 405 290 305 315 185"
+                    />
 
-                        <path
-                            d="M250 510 C245 400 230 300 205 185"
-                        />
+                    <path
+                        d="M250 510 C220 410 175 325 145 250"
+                    />
 
-                        <path
-                            d="M250 510 C260 405 290 305 315 185"
-                        />
+                    <path
+                        d="M250 510 C285 410 345 330 370 250"
+                    />
 
-                        <path
-                            d="M250 510 C220 410 175 325 145 250"
-                        />
+                    <path
+                        d="M250 510 C250 405 250 300 250 155"
+                    />
 
-                        <path
-                            d="M250 510 C285 410 345 330 370 250"
-                        />
+                    <path
+                        d="M250 510 C235 420 210 350 190 300"
+                    />
 
-                        <path
-                            d="M250 510 C250 405 250 300 250 155"
-                        />
+                    <path
+                        d="M250 510 C275 420 305 350 330 295"
+                    />
 
-                        <path
-                            d="M250 510 C235 420 210 350 190 300"
-                        />
-
-                        <path
-                            d="M250 510 C275 420 305 350 330 295"
-                        />
-
-                    </g>
+                </g>
 
 
-                    <!-- HOJAS -->
-                    <g class="hojas">
+                <!-- HOJAS -->
 
-                        <ellipse
-                            cx="205"
-                            cy="370"
-                            rx="15"
-                            ry="38"
-                            transform="rotate(-35 205 370)"
-                        />
+                <g class="hojas">
 
-                        <ellipse
-                            cx="295"
-                            cy="385"
-                            rx="15"
-                            ry="38"
-                            transform="rotate(35 295 385)"
-                        />
+                    <ellipse
+                        cx="205"
+                        cy="370"
+                        rx="15"
+                        ry="38"
+                        transform="rotate(-35 205 370)"
+                    />
 
-                        <ellipse
-                            cx="175"
-                            cy="325"
-                            rx="13"
-                            ry="34"
-                            transform="rotate(-45 175 325)"
-                        />
+                    <ellipse
+                        cx="295"
+                        cy="385"
+                        rx="15"
+                        ry="38"
+                        transform="rotate(35 295 385)"
+                    />
 
-                        <ellipse
-                            cx="325"
-                            cy="335"
-                            rx="13"
-                            ry="34"
-                            transform="rotate(45 325 335)"
-                        />
+                    <ellipse
+                        cx="175"
+                        cy="325"
+                        rx="13"
+                        ry="34"
+                        transform="rotate(-45 175 325)"
+                    />
 
-                        <ellipse
-                            cx="225"
-                            cy="300"
-                            rx="12"
-                            ry="30"
-                            transform="rotate(-30 225 300)"
-                        />
+                    <ellipse
+                        cx="325"
+                        cy="335"
+                        rx="13"
+                        ry="34"
+                        transform="rotate(45 325 335)"
+                    />
 
-                        <ellipse
-                            cx="280"
-                            cy="305"
-                            rx="12"
-                            ry="30"
-                            transform="rotate(30 280 305)"
-                        />
+                    <ellipse
+                        cx="225"
+                        cy="300"
+                        rx="12"
+                        ry="30"
+                        transform="rotate(-30 225 300)"
+                    />
 
-                    </g>
+                    <ellipse
+                        cx="280"
+                        cy="305"
+                        rx="12"
+                        ry="30"
+                        transform="rotate(30 280 305)"
+                    />
 
-
-                    <!-- FLOR 1 -->
-                    <g class="flor flor1">
-
-                        <circle class="petalo" cx="205" cy="145" r="35"/>
-                        <circle class="petalo" cx="175" cy="165" r="35"/>
-                        <circle class="petalo" cx="235" cy="165" r="35"/>
-                        <circle class="petalo" cx="185" cy="195" r="35"/>
-                        <circle class="petalo" cx="225" cy="195" r="35"/>
-
-                        <circle class="centro" cx="205" cy="175" r="27"/>
-
-                    </g>
+                </g>
 
 
-                    <!-- FLOR 2 -->
-                    <g class="flor flor2">
+                <!-- FLOR 1 -->
 
-                        <circle class="petalo" cx="315" cy="145" r="35"/>
-                        <circle class="petalo" cx="285" cy="165" r="35"/>
-                        <circle class="petalo" cx="345" cy="165" r="35"/>
-                        <circle class="petalo" cx="295" cy="195" r="35"/>
-                        <circle class="petalo" cx="335" cy="195" r="35"/>
+                <g class="flor flor1">
 
-                        <circle class="centro" cx="315" cy="175" r="27"/>
+                    <circle
+                        class="petalo"
+                        cx="205"
+                        cy="145"
+                        r="35"
+                    />
 
-                    </g>
+                    <circle
+                        class="petalo"
+                        cx="175"
+                        cy="165"
+                        r="35"
+                    />
 
+                    <circle
+                        class="petalo"
+                        cx="235"
+                        cy="165"
+                        r="35"
+                    />
 
-                    <!-- FLOR 3 -->
-                    <g class="flor flor3">
+                    <circle
+                        class="petalo"
+                        cx="185"
+                        cy="195"
+                        r="35"
+                    />
 
-                        <circle class="petalo" cx="145" cy="220" r="34"/>
-                        <circle class="petalo" cx="115" cy="240" r="34"/>
-                        <circle class="petalo" cx="175" cy="240" r="34"/>
-                        <circle class="petalo" cx="125" cy="270" r="34"/>
-                        <circle class="petalo" cx="165" cy="270" r="34"/>
+                    <circle
+                        class="petalo"
+                        cx="225"
+                        cy="195"
+                        r="35"
+                    />
 
-                        <circle class="centro" cx="145" cy="250" r="26"/>
+                    <circle
+                        class="centro"
+                        cx="205"
+                        cy="175"
+                        r="27"
+                    />
 
-                    </g>
-
-
-                    <!-- FLOR 4 -->
-                    <g class="flor flor4">
-
-                        <circle class="petalo" cx="370" cy="220" r="34"/>
-                        <circle class="petalo" cx="340" cy="240" r="34"/>
-                        <circle class="petalo" cx="400" cy="240" r="34"/>
-                        <circle class="petalo" cx="350" cy="270" r="34"/>
-                        <circle class="petalo" cx="390" cy="270" r="34"/>
-
-                        <circle class="centro" cx="370" cy="250" r="26"/>
-
-                    </g>
-
-
-                    <!-- FLOR 5 -->
-                    <g class="flor flor5">
-
-                        <circle class="petalo" cx="250" cy="120" r="37"/>
-                        <circle class="petalo" cx="220" cy="140" r="37"/>
-                        <circle class="petalo" cx="280" cy="140" r="37"/>
-                        <circle class="petalo" cx="230" cy="170" r="37"/>
-                        <circle class="petalo" cx="270" cy="170" r="37"/>
-
-                        <circle class="centro" cx="250" cy="150" r="28"/>
-
-                    </g>
+                </g>
 
 
-                    <!-- FLOR 6 -->
-                    <g class="flor flor6">
+                <!-- FLOR 2 -->
 
-                        <circle class="petalo" cx="250" cy="235" r="36"/>
-                        <circle class="petalo" cx="220" cy="255" r="36"/>
-                        <circle class="petalo" cx="280" cy="255" r="36"/>
-                        <circle class="petalo" cx="230" cy="285" r="36"/>
-                        <circle class="petalo" cx="270" cy="285" r="36"/>
+                <g class="flor flor2">
 
-                        <circle class="centro" cx="250" cy="265" r="27"/>
+                    <circle class="petalo"
+                        cx="315"
+                        cy="145"
+                        r="35"/>
 
-                    </g>
+                    <circle class="petalo"
+                        cx="285"
+                        cy="165"
+                        r="35"/>
 
-                </svg>
+                    <circle class="petalo"
+                        cx="345"
+                        cy="165"
+                        r="35"/>
+
+                    <circle class="petalo"
+                        cx="295"
+                        cy="195"
+                        r="35"/>
+
+                    <circle class="petalo"
+                        cx="335"
+                        cy="195"
+                        r="35"/>
+
+                    <circle
+                        class="centro"
+                        cx="315"
+                        cy="175"
+                        r="27"
+                    />
+
+                </g>
 
 
-                <!-- PAPEL -->
-                <div class="papel">
+                <!-- FLOR 3 -->
 
-                    <div class="papel-lazo"></div>
+                <g class="flor flor3">
 
-                </div>
+                    <circle class="petalo"
+                        cx="145"
+                        cy="220"
+                        r="34"/>
+
+                    <circle class="petalo"
+                        cx="115"
+                        cy="240"
+                        r="34"/>
+
+                    <circle class="petalo"
+                        cx="175"
+                        cy="240"
+                        r="34"/>
+
+                    <circle class="petalo"
+                        cx="125"
+                        cy="270"
+                        r="34"/>
+
+                    <circle class="petalo"
+                        cx="165"
+                        cy="270"
+                        r="34"/>
+
+                    <circle
+                        class="centro"
+                        cx="145"
+                        cy="250"
+                        r="26"
+                    />
+
+                </g>
+
+
+                <!-- FLOR 4 -->
+
+                <g class="flor flor4">
+
+                    <circle class="petalo"
+                        cx="370"
+                        cy="220"
+                        r="34"/>
+
+                    <circle class="petalo"
+                        cx="340"
+                        cy="240"
+                        r="34"/>
+
+                    <circle class="petalo"
+                        cx="400"
+                        cy="240"
+                        r="34"/>
+
+                    <circle class="petalo"
+                        cx="350"
+                        cy="270"
+                        r="34"/>
+
+                    <circle class="petalo"
+                        cx="390"
+                        cy="270"
+                        r="34"/>
+
+                    <circle
+                        class="centro"
+                        cx="370"
+                        cy="250"
+                        r="26"
+                    />
+
+                </g>
+
+
+                <!-- FLOR 5 -->
+
+                <g class="flor flor5">
+
+                    <circle class="petalo"
+                        cx="250"
+                        cy="120"
+                        r="37"/>
+
+                    <circle class="petalo"
+                        cx="220"
+                        cy="140"
+                        r="37"/>
+
+                    <circle class="petalo"
+                        cx="280"
+                        cy="140"
+                        r="37"/>
+
+                    <circle class="petalo"
+                        cx="230"
+                        cy="170"
+                        r="37"/>
+
+                    <circle class="petalo"
+                        cx="270"
+                        cy="170"
+                        r="37"/>
+
+                    <circle
+                        class="centro"
+                        cx="250"
+                        cy="150"
+                        r="28"
+                    />
+
+                </g>
+
+
+                <!-- FLOR 6 -->
+
+                <g class="flor flor6">
+
+                    <circle class="petalo"
+                        cx="250"
+                        cy="235"
+                        r="36"/>
+
+                    <circle class="petalo"
+                        cx="220"
+                        cy="255"
+                        r="36"/>
+
+                    <circle class="petalo"
+                        cx="280"
+                        cy="255"
+                        r="36"/>
+
+                    <circle class="petalo"
+                        cx="230"
+                        cy="285"
+                        r="36"/>
+
+                    <circle class="petalo"
+                        cx="270"
+                        cy="285"
+                        r="36"/>
+
+                    <circle
+                        class="centro"
+                        cx="250"
+                        cy="265"
+                        r="27"
+                    />
+
+                </g>
+
+
+            </svg>
+
+
+            <!-- PAPEL -->
+
+            <div class="papel">
+
+                <div class="papel-lazo"></div>
 
             </div>
 
@@ -277,18 +994,60 @@
 
 
         <!-- MENSAJE -->
+
         <div class="mensaje">
 
-            <p id="mensajeTexto">
-                Para alguien muy especial...
-            </p>
+            Para alguien muy especial... 🌻
 
         </div>
+
 
     </section>
 
 
-    <script src="script.js"></script>
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+        function mostrarRamo() {
+
+            const inicio =
+                document.getElementById(
+                    "inicio"
+                );
+
+            const ramo =
+                document.getElementById(
+                    "ramoPantalla"
+                );
+
+
+            /* Ocultar tarjeta */
+
+            inicio.classList.add(
+                "oculto"
+            );
+
+
+            /* Esperar un poquito */
+
+            setTimeout(function() {
+
+                ramo.classList.add(
+                    "mostrar"
+                );
+
+            }, 500);
+
+        }
+
+    </script>
+
 
 </body>
+
 </html>
+```
